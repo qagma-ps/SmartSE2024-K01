@@ -7,11 +7,11 @@
 # 複数形の"s"も忘れないようにつけましょう。
 
 # Ambientチャネル名「k01_team5_チャネル」
-channelId = 79809
-writeKey = b658c06ea738afef
+channelId = 12345
+writeKey = XXXX
 
 # LINE
-token = Zb3WbcdSec1YnQjr2JEM7KzO2Vc93C6lUFj2O6d1sVQ
+token = XXXX
 message = "厳重警戒レベル(暑さ指数WBGT値=30℃)"
 
 # 温度、湿度、暑さ指数(WBGT)
@@ -27,17 +27,21 @@ wbgt = 27
 
 # Ambient送信関数
 import ambient
+
+
 def send_ambient(channelId, writeKey, temp, humid):
     ambi = ambient.Ambient(channelId, writeKey)
-    r = ambi.send({'d1': temp, 'd2': humid})
+    r = ambi.send({"d1": temp, "d2": humid})
+
 
 # LINEメッセージ送信関数
 import requests
-def send_line_message(token, message):
-    url = "https://notify-api.line.me/api/notify" 
-    token = (token)
-    headers = {"Authorization" : "Bearer" + token}
-    message = (message)
-    payload = {"message" : message} 
-    r = requests.post(url, headers = headers, params = payload)
 
+
+def send_line_message(token, message):
+    url = "https://notify-api.line.me/api/notify"
+    token = token
+    headers = {"Authorization": "Bearer" + token}
+    message = message
+    payload = {"message": message}
+    r = requests.post(url, headers=headers, params=payload)
