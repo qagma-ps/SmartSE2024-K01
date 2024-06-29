@@ -40,16 +40,15 @@ def save_temp_data():
     result = sensor.read()
     # 正しく読み取れたら処理する
     if result.is_valid():
-        print("Temperature: %d C" % result.temperature)
-        print("Humidity: %d %%" % result.humidity)
+        timestamp_temp = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+        print(f"Timestamp: {timestamp_temp}, Temperature: {result.temperature} °C, Humidity: {result.humidity} %")
 
-    # CSVファイルに書き込み
-    timestamp_temp = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
-    with open(csv_filename_temp, mode="a", newline="") as csv_file_temp:
-        csv_writer_temp = csv.writer(csv_file_temp)
-        csv_writer_temp.writerow(
-            [timestamp_temp, result.temperature, result.humidity]
-        )
+        # CSVファイルに書き込み
+        with open(csv_filename_temp, mode="a", newline="") as csv_file_temp:
+            csv_writer_temp = csv.writer(csv_file_temp)
+            csv_writer_temp.writerow(
+                [timestamp_temp, result.temperature, result.humidity]
+            )
 
 
 
