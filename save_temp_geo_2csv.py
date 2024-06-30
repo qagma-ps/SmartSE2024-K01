@@ -21,18 +21,19 @@ pi.wiringPiSetupGpio()
 sensor = dht11.DHT11(pin=4)
 
 # CSVファイルの準備
-    csv_filename_temp = "temp_data.csv"
-    with open(csv_filename_temp, mode="w", newline="") as csv_file_temp:
-        csv_writer_temp = csv.writer(csv_file_temp)
-        # ヘッダーの書き込み
-        csv_writer_temp.writerow(["Timestamp", "Temperature", "Humidity"])
+csv_filename_temp = "temp_data.csv"
+with open(csv_filename_temp, mode="w", newline="") as csv_file_temp:
+    csv_writer_temp = csv.writer(csv_file_temp)
+    # ヘッダーの書き込み
+    csv_writer_temp.writerow(["Timestamp", "Temperature", "Humidity"])
 
 # CSVファイルの準備
-    csv_filename = "geo_data.csv"
-    with open(csv_filename, mode="w", newline="") as csv_file:
-        csv_writer = csv.writer(csv_file)
-        # ヘッダーの書き込み
-        csv_writer.writerow(["Timestamp", "Latitude", "Longitude"])
+csv_filename = "geo_data.csv"
+with open(csv_filename, mode="w", newline="") as csv_file:
+    csv_writer = csv.writer(csv_file)
+    # ヘッダーの書き込み
+    csv_writer.writerow(["Timestamp", "Latitude", "Longitude"])
+
 
 # 温度と湿度を取得し、コンソールに表示し、CSVファイルに書き込みます。
 def save_temp_data():
@@ -41,7 +42,9 @@ def save_temp_data():
     # 正しく読み取れたら処理する
     if result.is_valid():
         timestamp_temp = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
-        print(f"Timestamp: {timestamp_temp}, Temperature: {result.temperature} °C, Humidity: {result.humidity} %")
+        print(
+            f"Timestamp: {timestamp_temp}, Temperature: {result.temperature} °C, Humidity: {result.humidity} %"
+        )
 
         # CSVファイルに書き込み
         with open(csv_filename_temp, mode="a", newline="") as csv_file_temp:
@@ -49,7 +52,6 @@ def save_temp_data():
             csv_writer_temp.writerow(
                 [timestamp_temp, result.temperature, result.humidity]
             )
-
 
 
 # Parse the GNGGA sentence to extract the latitude and longitude.
@@ -86,11 +88,14 @@ def parse_gngga(sentence):
 # デフォルトでは、Raspberry Piのシリアルポート/dev/ttyS0を使用します。
 def get_gps_data(serial_port="/dev/ttyS0", baud_rate=9600, timeout=1):
     with serial.Serial(serial_port, baud_rate, timeout=timeout) as ser:
-        line = ser.readline().decode("ascii", errors="replace")
-        if "$GNGGA" in line:
-            lat, lon = parse_gngga(line)
-            if lat is not None and lon is not None:
-                return lat, lon
+        while True:
+            line = ser.readline().decode("ascii", errors="replace")
+            if "$GNGGA" in line:
+                lat, lon = parse_gngga(line)
+                if lat is not None and lon is not None:
+                    return lat, lon
+                else:
+                    return None, None
 
 
 # 緯度と経度を取得し、コンソールに表示し、CSVファイルに書き込みます。
@@ -104,6 +109,7 @@ def save_gps_data():
     with open(csv_filename, mode="a", newline="") as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow([timestamp, latitude, longitude])
+
 
 if __name__ == "__main__":
     try:
