@@ -12,14 +12,14 @@
 #   2.距離 distance_m が変化していないなら、LINEへメッセージ送信する。
 
 # Ambientチャネル
-channelId = 80174
-channelId_geo = 80277
-writeKey = "fafd88a4791cc6ef"
-writeKey_geo = "a469c6d24675c8e6"
-channelUrl = "https://ambidata.io/bd/board.html?id=80338"
-channelUrl_geo = "https://ambidata.io/bd/board.html?id=80497"
+channelId = 12345
+channelId_geo = 12345
+writeKey = "XXX"
+writeKey_geo = "XXX"
+channelUrl = "https://ambidata.io/bd/board.html?id=XXXX"
+channelUrl_geo = "https://ambidata.io/bd/board.html?id=XXX"
 # LINE
-token = "lvU795U8GgLJLejpcbvE6IcJN3VKqmlDNpc8QpSstYz"
+token = "XXX"
 
 
 import sys
