@@ -7,14 +7,14 @@
 # 複数形の"s"も忘れないようにつけましょう。
 
 # Ambientチャネル
-channelId = 12345
-channelId_geo = 12345
-writeKey = "XXX"
-writeKey_geo = "XXXX"
-
+channelId = 80174
+channelId_geo = 80277
+writeKey = "fafd88a4791cc6ef"
+writeKey_geo = "a469c6d24675c8e6"
+channelUrl = "https://ambidata.io/bd/board.html?id=80338"
 # LINE
-token = "XXXXX"
-msg = "厳重警戒レベル(暑さ指数WBGT値=30℃)"
+token = "lvU795U8GgLJLejpcbvE6IcJN3VKqmlDNpc8QpSstYz"
+msg = "気温が厳重警戒レベル(暑さ指数WBGT値=30)になりました。\n見守り人の安全に気を付けてください。\n"+channelUrl
 
 # ■モジュールのインストールコマンド
 # pi$ sudo pip install git+https://github.com/AmbientDataInc/ambient-python-lib.git
@@ -99,4 +99,4 @@ if __name__ == "__main__":
     print(converted_data_geo[0])
     # send_ambient(channelId, writeKey, converted_data)
     send_ambient(channelId_geo, writeKey_geo, converted_data_geo)
-# send_line_message(msg)
+    # send_line_message(msg)
